@@ -8,12 +8,12 @@ A modern web application built with Next.js, TypeScript, and Tailwind CSS to hel
 - Node.js (v18 or higher)
 - npm or yarn
 - Git
-- Cursor IDE (recommended)
+- Any IDE
 
 ### Installation
 1. Clone the repository:
 ```bash
-git clone https://github.com/CVSwitch/homepage.git
+git clone https://github.com/CVSwitch/assignment/homepage.git
 cd homepage
 ```
 
@@ -36,17 +36,12 @@ yarn dev
 ## 📚 Assignment Guidelines
 
 ### Important Notes
-1. **IDE Usage**:
-   - You are allowed to use Cursor IDE for development
-   - Cursor's AI features can be used for code completion and suggestions
-   - However, you must understand the code you write
-
-2. **Assignment Selection**:
+1. **Assignment Selection**:
    - You can choose any one assignment from the list below
    - Technical understanding will be evaluated in later rounds
    - Focus on completing the chosen assignment thoroughly
 
-3. **Development Process**:
+2. **Development Process**:
    - Use Cursor's features to help with:
      - Code completion
      - Bug fixing
@@ -54,22 +49,29 @@ yarn dev
      - Documentation generation
    - But ensure you understand the changes made
 
-4. **Evaluation Focus**:
+3. **Evaluation Focus**:
    - Initial evaluation will focus on:
      - Working functionality
      - Code organization
-     - Documentation
+     - Working model (vercel)
    - Technical depth will be assessed in subsequent rounds
+  
+
 
 ## 📚 Assignments
 
 ### Assignment 1: Modular Resume Templates (5 marks)
-**Due Date**: [Specify due date]
+**Due Date**: [3 days]
 
 #### Requirements
 1. Create two new resume templates:
    - Template 1: A clean, minimalist design
    - Template 2: A modern design with visual elements
+
+<img width="1256" alt="Screenshot 2025-04-30 at 1 01 36 AM" src="https://github.com/user-attachments/assets/9645912d-cf50-44d0-b5e0-69a9483e0507" />
+
+<img width="1191" alt="Screenshot 2025-04-30 at 1 01 26 AM" src="https://github.com/user-attachments/assets/b67996fe-3ef2-425b-80de-4a7cf4dbe8b2" />
+
 
 2. Integration Requirements:
    - Templates must work with existing resume data structure
@@ -83,31 +85,24 @@ yarn dev
 - Implement using React components
 - Ensure proper TypeScript typing
 
-#### Submission
-- Deploy your solution on Vercel
-- Submit the Vercel deployment URL
-- Include a brief documentation of your implementation
 
-### Assignment 2: Platform UI/UX Overhaul (10 marks)
-**Due Date**: [Specify due date]
+### Assignment 2: Platform UI/UX Improvement  (10 marks)
+**Due Date**: [1 week]
 
 #### Requirements
-1. Redesign the platform's user interface:
+1. Redesign the elements in platform's user interface: (Pick any area which you feel can be improved in terms of design) 
    - Implement consistent design language
    - Improve navigation flow
-   - Enhance mobile responsiveness
-
-2. Specific Improvements:
+   - Be Creative
    - Redesign the dashboard layout
-   - Improve form interactions
-   - Add loading states and transitions
-   - Implement error handling UI
+
+
 
 #### Technical Details
 - Use Tailwind CSS for styling
 - Implement responsive design patterns
-- Follow accessibility guidelines (WCAG 2.1)
-- Add proper error boundaries
+
+
 
 #### Submission
 - Deploy your solution on Vercel
@@ -116,46 +111,33 @@ yarn dev
 - Document your design decisions
 
 ### Assignment 3: LinkedIn Optimizer Enhancement (15 marks)
-**Due Date**: [Specify due date]
+**Due Date**: [1 week]
+<img width="969" alt="image" src="https://github.com/user-attachments/assets/096312cc-c22f-433d-8452-dcbaf60ee3f1" />
+
 
 #### Requirements
-1. Enhance the LinkedIn profile optimization:
-   - Add keyword analysis
-   - Implement profile strength scoring
-   - Create visual progress indicators
+1. Design the LinkedIn profile optimization Page:  
+   - The tool actually helps you optimise your linkedin profile section based on resume and job description. Keeping this info in mind how would you design the elements in this page.
+   - You can generate dummy data to show in the UI.
 
-2. New Features:
-   - Profile completeness checker
-   - Keyword gap analysis
-   - Headline optimization suggestions
-   - Experience section enhancement
 
-#### Technical Details
-- Implement NLP-based analysis
-- Create reusable scoring components
-- Add data visualization
-- Implement proper error handling
-
-#### Submission
-- Deploy your solution on Vercel
-- Submit the Vercel deployment URL
-- Include test cases
-- Document the optimization algorithms
 
 ### Assignment 4: Interview Prep Tool Enhancement (20 marks)
 **Due Date**: [Specify due date]
 
 #### Requirements
-1. Create an interactive interview preparation system:
-   - Implement different interview types
-   - Add real-time feedback
-   - Create a scoring system
+1. Create an interactive interview preparation chat system:
+2. <img width="1272" alt="image" src="https://github.com/user-attachments/assets/f1e3b014-f2f9-405b-8b0e-f2572c22f1ba" />
 
-2. Features to Implement:
-   - Technical interview simulator
-   - Behavioral interview practice
-   - Case study scenarios
+
+3. Features to Implement: 
+   - User can select which round it is , paste in the job description and select which resume they want to prepare on. 
+   - Given above context, implement a chat based ui where the bot asks the interview questions relevant to above info. 
    - Response analysis and feedback
+   - You can either use static stored questions or use any open source LLM or gpt api for question generation. 
+   - Focus will be on the design part and not the api calling. 
+
+
 
 #### Technical Details
 - Implement chat-based interface
@@ -163,11 +145,6 @@ yarn dev
    - Create scoring algorithms
    - Implement proper state management
 
-#### Submission
-- Deploy your solution on Vercel
-- Submit the Vercel deployment URL
-- Include user flow documentation
-- Document the scoring system
 
 ## 🎯 Evaluation Criteria
 
@@ -193,9 +170,7 @@ yarn dev
 
 ### Deployment (10%)
 - Successful Vercel deployment
-- Environment configuration
-- Build process
-- Performance metrics
+
 
 ## 📝 Submission Guidelines
 
@@ -215,27 +190,12 @@ git commit -m "Complete Assignment 1"
 git push origin assignment-1
 ```
 
-4. Create a Pull Request with:
+4. Push in your public repo:
    - Assignment number in title
    - Description of changes
    - Vercel deployment URL
    - Screenshots (if applicable)
 
-## 🎓 Learning Resources
-
-- [Next.js Documentation](https://nextjs.org/docs)
-- [Tailwind CSS Documentation](https://tailwindcss.com/docs)
-- [TypeScript Documentation](https://www.typescriptlang.org/docs)
-- [React Documentation](https://reactjs.org/docs)
-- [Vercel Deployment Guide](https://vercel.com/docs)
-- [Cursor IDE Documentation](https://cursor.sh/docs)
-
-## 📞 Support
-
-For any questions or clarifications, please:
-1. Check the existing documentation
-2. Review the codebase
-3. Contact the course instructor
 
 ## 📄 License
 
