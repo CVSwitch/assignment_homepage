@@ -3,28 +3,22 @@
 import { Sidebar } from "@/components/Sidebar";
 import { HeroSection } from "@/components/HeroSection";
 import { useState, useEffect } from 'react';
-import { auth } from '@/lib/firebase';
+import { auth } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
 
 export default function Home() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(auth.getCurrentUser());
   const [hasUploadedResume, setHasUploadedResume] = useState(false);
   const [pastResumes, setPastResumes] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const router = useRouter();
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged(async (currentUser) => {
-      if (currentUser) {
-        setUser(currentUser);
-        setLoading(false);
-      } else {
-        // If not logged in, redirect to login page
-        router.push('/');
-      }
-    });
-
-    return () => unsubscribe();
+    if (!auth.isAuthenticated()) {
+      router.push('/');
+    } else {
+      setLoading(false);
+    }
   }, [router]);
 
   const handleUploadResume = (file: File) => {
@@ -36,7 +30,8 @@ export default function Home() {
   const handleOfferingSelect = async (selectedOption: string) => {
     if (user) {
       try {
-        await completeOnboarding(user.uid, selectedOption);
+        // Implement your offering selection logic here
+        console.log('Selected offering:', selectedOption);
       } catch (error) {
         console.error('Error saving user preference:', error);
       }
@@ -58,7 +53,7 @@ export default function Home() {
       <main className="flex-1 ml-64 p-6">
         <div className="flex justify-between items-center mb-6">
           <h1 className="text-2xl font-bold text-gray-800">
-            Welcome back, <span className="text-blue-600">{user?.displayName || 'User'}</span>! 👋
+            Welcome back, <span className="text-blue-600">{user?.username || 'User'}</span>! 👋
           </h1>
         </div>
 

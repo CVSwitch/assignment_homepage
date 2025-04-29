@@ -1,6 +1,6 @@
 import React, { useState, useRef } from 'react';
 import { useRouter } from 'next/navigation';
-import { completeOnboarding } from '@/lib/firebase';
+import { User } from '@/lib/auth';
 
 const offerings = [
   { id: 'resume', label: 'I need a better resume', route: '/resume-optimizer' },
@@ -10,45 +10,31 @@ const offerings = [
 ];
 
 interface HeroSectionProps {
-  user: any;
+  user: User | null;
   hasUploadedResume: boolean;
   onUploadResume: (file: File) => void;
   pastResumes: string[];
-  hasCompletedOnboarding: boolean;
-  onOnboardingComplete: (selectedOption: string) => Promise<void>;
+  onOfferingSelect?: (selectedOption: string) => Promise<void>;
 }
 
-export const HeroSection: React.FC<HeroSectionProps> = ({ 
+export function HeroSection({ 
   user, 
   hasUploadedResume, 
   onUploadResume, 
   pastResumes,
-  hasCompletedOnboarding,
-  onOnboardingComplete
-}) => {
+  onOfferingSelect 
+}: HeroSectionProps) {
   const router = useRouter();
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showOfferings, setShowOfferings] = useState(!hasCompletedOnboarding);
+  const [showOfferings, setShowOfferings] = useState(!hasUploadedResume);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files) {
-      setSelectedFile(event.target.files[0]);
-    }
-  };
-
-  const handleUpload = () => {
-    if (selectedFile) {
-      onUploadResume(selectedFile);
-      setSelectedFile(null);
-    }
-  };
-
-  const triggerFileInput = () => {
-    if (fileInputRef.current) {
-      fileInputRef.current.click();
+    const file = event.target.files?.[0];
+    if (file) {
+      onUploadResume(file);
     }
   };
 
@@ -56,8 +42,8 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
     if (!isSubmitting) {
       setIsSubmitting(true);
       try {
-        if (!hasCompletedOnboarding && onOnboardingComplete) {
-          await onOnboardingComplete(optionId);
+        if (onOfferingSelect) {
+          await onOfferingSelect(optionId);
         }
         
         const selectedOption = offerings.find(option => option.id === optionId);
@@ -159,78 +145,39 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
   }
 
   return (
-    <div className="bg-white rounded-xl shadow-sm p-8 mb-6">
-      <div className="flex flex-col md:flex-row gap-8">
-        <div className="flex-1">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-xl font-semibold text-gray-800">Welcome back, {user?.displayName || 'User'}!</h2>
-            <button 
-              onClick={toggleOfferings}
-              className="text-sm text-blue-500 hover:text-blue-700 transition-colors"
-            >
-              Change your focus
-            </button>
-          </div>
-          
-          <div className="text-gray-600 mb-6">
-            {hasUploadedResume ? (
-              <p className="mb-4 text-gray-700">
-                Let our AI-powered assistant help you create a standout resume! You can also upload additional resumes below.
-              </p>
-            ) : (
-              <p className="mb-4 text-gray-700">
-                Start by uploading your resume to unlock analysis, editing, and interview prep tools.
-              </p>
-            )}
-            
-            <div className="mt-6 flex flex-col sm:flex-row items-start gap-3">
-              <input
-                type="file"
-                accept=".pdf,.doc,.docx"
-                onChange={handleFileChange}
-                className="hidden"
-                ref={fileInputRef}
-              />
-              <button
-                onClick={triggerFileInput}
-                className="bg-blue-600 text-white px-5 py-2.5 rounded-lg hover:bg-blue-700 transition-colors shadow-sm hover:shadow-md"
-              >
-                {hasUploadedResume ? 'Upload Another Resume' : 'Upload Resume'}
-              </button>
-              
-              {selectedFile && (
-                <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3">
-                  <span className="text-gray-600 text-sm bg-gray-50 px-3 py-2 rounded border border-gray-200">
-                    {selectedFile.name}
-                  </span>
-                  <button
-                    onClick={handleUpload}
-                    className="bg-green-600 text-white px-4 py-2 rounded-lg hover:bg-green-700 transition-colors shadow-sm hover:shadow-md"
-                  >
-                    Confirm Upload
-                  </button>
-                </div>
-              )}
+    <div className="space-y-6">
+      <div className="bg-white rounded-lg shadow-sm p-6">
+        <h2 className="text-xl font-semibold mb-4">Upload Your Resume</h2>
+        <div className="flex items-center justify-center w-full">
+          <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+            <div className="flex flex-col items-center justify-center pt-5 pb-6">
+              <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+                <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
+              </svg>
+              <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+              <p className="text-xs text-gray-500">PDF, DOC, or DOCX (MAX. 10MB)</p>
             </div>
-          </div>
+            <input type="file" className="hidden" onChange={handleFileChange} accept=".pdf,.doc,.docx" />
+          </label>
         </div>
       </div>
 
-      {pastResumes.length > 0 && (
-        <div className="mt-8">
-          <h3 className="font-semibold mb-3 text-gray-800">Your Resume History</h3>
-          <div className="border border-gray-200 rounded-lg overflow-hidden">
+      {hasUploadedResume && (
+        <div className="bg-white rounded-lg shadow-sm p-6">
+          <h2 className="text-xl font-semibold mb-4">Your Resumes</h2>
+          <div className="space-y-4">
             {pastResumes.map((resume, index) => (
-              <div 
-                key={index} 
-                className="p-3 border-b border-gray-100 last:border-b-0 hover:bg-gray-50 transition-colors"
-              >
-                <div className="flex items-center">
-                  <svg className="w-4 h-4 mr-2 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+              <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+                <div className="flex items-center space-x-4">
+                  <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
-                  <span className="text-sm text-gray-700">{resume}</span>
+                  <div>
+                    <p className="font-medium">{resume}</p>
+                    <p className="text-sm text-gray-500">Uploaded {new Date().toLocaleDateString()}</p>
+                  </div>
                 </div>
+                <button className="text-blue-600 hover:text-blue-800">Edit</button>
               </div>
             ))}
           </div>
@@ -238,4 +185,4 @@ export const HeroSection: React.FC<HeroSectionProps> = ({
       )}
     </div>
   );
-};
+}
