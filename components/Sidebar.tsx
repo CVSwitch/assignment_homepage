@@ -18,9 +18,10 @@ import {
 
 const navItems = [
   { name: "Home", href: "/home", icon: HomeIcon },
-  { name: "Resumes", href: "/resumes", icon: DocumentTextIcon },
-  { name: "Cover Letters", href: "/cover-letters", icon: BriefcaseIcon },
-  { name: "Profile", href: "/profile", icon: UserCircleIcon },
+  { name: "Resume Optimizer", href: "/resume-optimizer", icon: DocumentTextIcon },
+  { name: "LinkedIn Optimizer", href: "/linkedin-optimizer", icon: BriefcaseIcon },
+  { name: "Cover Letter", href: "/cover-letter", icon: DocumentTextIcon },
+  { name: "Interview Prep", href: "/interview-prep", icon: UserCircleIcon },
 ];
 
 export function Sidebar() {
