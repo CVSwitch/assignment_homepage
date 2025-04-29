@@ -176,7 +176,7 @@ yarn dev
 
 1. Create a new branch for each assignment:
 ```bash
-git checkout -b assignment-1
+git checkout -b name_assignment_1
 ```
 
 2. Complete your work and commit changes:
@@ -185,17 +185,18 @@ git add .
 git commit -m "Complete Assignment 1"
 ```
 
-3. Push to your repository:
+3. Push to the repository:
 ```bash
-git push origin assignment-1
+git push origin name_assignment_1
 ```
 
-4. Push in your public repo:
+4. Push in your public repo as well and share the link:
    - Assignment number in title
    - Description of changes
    - Vercel deployment URL
    - Screenshots (if applicable)
 
+Note: You are free to take help of GPT or Cursor. However code understanding will be assessed in later stages. 
 
 ## 📄 License
 
