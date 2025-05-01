@@ -13,7 +13,7 @@ A modern web application built with Next.js, TypeScript, and Tailwind CSS to hel
 ### Installation
 1. Clone the repository:
 ```bash
-git clone https://github.com/CVSwitch/assignment/homepage.git
+git clone [https://github.com/CVSwitch/assignment/homepage.git](https://github.com/CVSwitch/assignment_homepage.git
 cd homepage
 ```
 
@@ -80,7 +80,7 @@ yarn dev
    - Follow accessibility guidelines
 
 #### Technical Details
-- Location: `/src/templates/`
+- Location: `app/editor-app/(main)/editor`
 - Use existing template components as reference
 - Implement using React components
 - Ensure proper TypeScript typing
