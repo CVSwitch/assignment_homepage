@@ -10,9 +10,9 @@ import { LayoutTemplate, LayoutGrid, Palette } from "lucide-react";
 import { useState } from "react";
 
 interface TemplateDrawerProps {
-  currentTemplate: "single" | "double" | "colored" | "singleColored";
+  currentTemplate: "single" | "double" | "colored" | "singleColored" | "minimalist" | "modernVisual";
   onTemplateChange: (
-    template: "single" | "double" | "colored" | "singleColored"
+    template: "single" | "double" | "colored" | "singleColored" | "minimalist" | "modernVisual"
   ) => void;
 }
 
@@ -23,7 +23,7 @@ export default function TemplateDrawer({
   const [open, setOpen] = useState(false);
 
   const handleTemplateChange = (
-    template: "single" | "double" | "colored" | "singleColored"
+    template: "single" | "double" | "colored" | "singleColored" | "minimalist" | "modernVisual"
   ) => {
     onTemplateChange(template);
     setOpen(false);
@@ -57,6 +57,18 @@ export default function TemplateDrawer({
           title: "Single Column Colored",
           description: "Single-column layout with a vibrant colored theme",
         };
+      case "minimalist":
+        return {
+          icon: <LayoutTemplate className="h-5 w-5 text-gray-600" />,
+          title: "Minimalist",
+          description: "Clean, simple design with ample white space",
+        };
+      case "modernVisual":
+        return {
+          icon: <Palette className="h-5 w-5 text-blue-500" />,
+          title: "Modern Visual",
+          description: "Contemporary design with visual elements and color accents",
+        };
       default:
         return {
           icon: <LayoutTemplate className="h-5 w-5" />,
@@ -79,23 +91,22 @@ export default function TemplateDrawer({
         </Button>
       </DrawerTrigger>
 
-      
+
       <DrawerContent>
         <DrawerHeader>
           <DrawerTitle>Choose Template</DrawerTitle>
         </DrawerHeader>
         <div className="flex-1 overflow-y-auto p-4">
           <div className="space-y-4">
-            {["single", "double", "colored", "singleColored"].map((type) => {
+            {["single", "double", "colored", "singleColored", "minimalist", "modernVisual"].map((type) => {
               const { icon, title, description } = getTemplateDetails(type);
               return (
                 <div
                   key={type}
-                  className={`p-4 rounded-lg border cursor-pointer transition-all ${
-                    currentTemplate === type
-                      ? "border-blue-500 bg-blue-50"
-                      : "border-gray-200 hover:border-gray-300"
-                  }`}
+                  className={`p-4 rounded-lg border cursor-pointer transition-all ${currentTemplate === type
+                    ? "border-blue-500 bg-blue-50"
+                    : "border-gray-200 hover:border-gray-300"
+                    }`}
                   onClick={() =>
                     handleTemplateChange(
                       type as TemplateDrawerProps["currentTemplate"]
