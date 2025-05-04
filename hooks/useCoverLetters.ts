@@ -1,6 +1,13 @@
 import { useState, useEffect } from 'react';
 import { coverLetterService } from '@/services/coverLetterService';
 
+interface CoverLetter {
+  id: string;
+  name: string;
+  lastModified: string;
+  url?: string;
+}
+
 export function useCoverLetters(userId: string | undefined) {
   const [coverLetters, setCoverLetters] = useState<CoverLetter[]>([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,18 +39,27 @@ export function useCoverLetters(userId: string | undefined) {
   }, [userId]);
 
   const uploadCoverLetter = async (file: File) => {
-    if (!userId) return;
-    
+    if (!userId) {
+      setError('User not authenticated');
+      return;
+    }
+
     setUploadLoading(true);
     setError(null);
+
     try {
-      const newCoverLetter = await coverLetterService.uploadCoverLetter(userId, file);
+      // TODO: Implement actual file upload logic
+      const newCoverLetter: CoverLetter = {
+        id: Date.now().toString(),
+        name: file.name,
+        lastModified: new Date().toISOString(),
+        url: URL.createObjectURL(file)
+      };
+
       setCoverLetters(prev => [...prev, newCoverLetter]);
-      return newCoverLetter;
-    } catch (error) {
-      console.error('Error uploading cover letter:', error);
-      setError(error instanceof Error ? error.message : 'Failed to upload cover letter');
-      throw error;
+    } catch (err) {
+      setError('Failed to upload cover letter');
+      console.error('Error uploading cover letter:', err);
     } finally {
       setUploadLoading(false);
     }

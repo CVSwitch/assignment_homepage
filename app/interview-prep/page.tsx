@@ -1,12 +1,19 @@
 "use client";
 
-import React from 'react';
+import { useState } from "react";
+import { useTheme } from "next-themes";
 import { InterviewPrepSection } from "@/components/interview/InterviewPrepSection";
 
-export default function InterviewPrepPage() {
+// InterviewPrepSection component handles the main interview preparation functionality
+// including chat interface, message history, and AI responses
+
+export default function InterviewPrep() {
+  const { theme } = useTheme();
+  const [isCollapsed, setIsCollapsed] = useState(false);
+
   return (
-    <React.Fragment>
-      <InterviewPrepSection />
-    </React.Fragment>
+    <div className={`min-h-screen ${theme === "dark" ? "bg-gray-900" : "bg-gray-50"}`}>
+      <InterviewPrepSection isCollapsed={isCollapsed} setIsCollapsed={setIsCollapsed} />
+    </div>
   );
 } 
