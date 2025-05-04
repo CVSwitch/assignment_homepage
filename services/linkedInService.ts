@@ -1,4 +1,8 @@
-import { LinkedInProfile } from "@/types/linkedin";
+interface LinkedInProfile {
+  id: string;
+  userId: string;
+  // Add other LinkedIn profile fields as needed
+}
 
 class LinkedInService {
   async getProfiles(userId: string): Promise<LinkedInProfile[]> {

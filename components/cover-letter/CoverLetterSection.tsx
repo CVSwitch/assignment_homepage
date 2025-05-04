@@ -6,14 +6,14 @@ import {
   PencilIcon,
   ArrowDownTrayIcon,
   DocumentTextIcon,
-  ArrowUpTrayIcon,
+  // ArrowUpTrayIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
 import { Sidebar } from "@/components/Sidebar";
 import { Button } from "@/components/ui/button";
 import { useAuth } from "@/hooks/useAuth";
 import { useCoverLetters } from "@/hooks/useCoverLetters";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 
 interface CoverLetter {
   id: string;
@@ -24,12 +24,10 @@ interface CoverLetter {
 
 export default function CoverLetterSection() {
   const { user } = useAuth();
-  const { coverLetters, isLoading, uploadCoverLetter, uploadLoading, error } = useCoverLetters(user?.uid);
+  const { coverLetters, isLoading, uploadCoverLetter, uploadLoading, error } = useCoverLetters(user?.id);
   const [isCollapsed, setIsCollapsed] = useState(false);
   const fileInputRef = useRef<HTMLInputElement>(null);
-  const [isParsing, setIsParsing] = useState(false);
-  const [parsingStatus, setParsingStatus] = useState<string | null>(null);
-  const [mounted, setMounted] = useState(false);
+  // const [mounted, setMounted] = useState(false);
 
   const handleFileChange = async (event: React.ChangeEvent<HTMLInputElement>) => {
     if (event.target.files && event.target.files[0] && user) {
