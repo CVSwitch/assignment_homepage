@@ -27,26 +27,38 @@ export const auth = {
       throw new Error('Invalid username or password');
     }
     
-    // Store user in localStorage
-    const userData = { id: user.id, username: user.username, email: user.email };
-    localStorage.setItem('user', JSON.stringify(userData));
-    
-    return userData;
+    // Store user in localStorage only if window is defined
+    if (typeof window !== 'undefined') {
+      const userData = { id: user.id, username: user.username, email: user.email };
+      localStorage.setItem('user', JSON.stringify(userData));
+      return userData;
+    } else {
+      // Return user data without storing if on server
+      return { id: user.id, username: user.username, email: user.email };
+    }
   },
   
   // Sign out
   signOut: () => {
-    localStorage.removeItem('user');
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('user');
+    }
   },
   
   // Get current user
   getCurrentUser: (): User | null => {
+    if (typeof window === 'undefined') {
+      return null;
+    }
     const userStr = localStorage.getItem('user');
     return userStr ? JSON.parse(userStr) : null;
   },
   
   // Check if user is authenticated
   isAuthenticated: (): boolean => {
+    if (typeof window === 'undefined') {
+      return false;
+    }
     return !!localStorage.getItem('user');
   }
-}; 
+};

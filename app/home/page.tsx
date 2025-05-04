@@ -5,15 +5,16 @@ import { HeroSection } from "@/components/HeroSection";
 import { useState, useEffect } from 'react';
 import { auth } from '@/lib/auth';
 import { useRouter } from 'next/navigation';
-import { useTheme } from 'next-themes';
+// import { useTheme } from 'next-themes';
 
 export default function Home() {
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   const [user, setUser] = useState(auth.getCurrentUser());
   const [hasUploadedResume, setHasUploadedResume] = useState(false);
   const [pastResumes, setPastResumes] = useState<string[]>([]);
   const [loading, setLoading] = useState(true);
   const [isCollapsed, setIsCollapsed] = useState(false);
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
   const router = useRouter();
 
   useEffect(() => {

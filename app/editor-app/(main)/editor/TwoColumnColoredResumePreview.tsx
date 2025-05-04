@@ -91,6 +91,7 @@ export default function TwoColumnColoredResumePreview({ className, contentRef }:
   );
 }
 
+// eslint-disable-next-line react/display-name
 const PersonalInfoHeader = memo(({ personalInfo }: ResumeSectionProps) => {
   const { firstname, lastname, email, phone, socials, city, country, summary } =
     personalInfo || {};
@@ -150,6 +151,7 @@ const PersonalInfoHeader = memo(({ personalInfo }: ResumeSectionProps) => {
   );
 });
 
+// eslint-disable-next-line react/display-name
 const EducationSection = memo(({ education }: ResumeSectionProps) => {
   if (!education?.length) return null;
 
@@ -188,6 +190,7 @@ const EducationSection = memo(({ education }: ResumeSectionProps) => {
   );
 });
 
+// eslint-disable-next-line react/display-name
 const WorkExperienceSection = memo(({ workExperiences }: ResumeSectionProps) => {
   if (!workExperiences?.length) return null;
 
@@ -233,6 +236,7 @@ const WorkExperienceSection = memo(({ workExperiences }: ResumeSectionProps) => 
   );
 });
 
+// eslint-disable-next-line react/display-name
 const ProjectsSection = memo(({ projects }: ResumeSectionProps) => {
   if (!projects?.length) return null;
 
@@ -278,6 +282,7 @@ const ProjectsSection = memo(({ projects }: ResumeSectionProps) => {
   );
 });
 
+// eslint-disable-next-line react/display-name
 const GenericSection = memo(({ title, data, color }: GenericSectionProps) => {
   if (!data?.description) return null;
 
@@ -296,26 +301,32 @@ const GenericSection = memo(({ title, data, color }: GenericSectionProps) => {
   );
 });
 
+// eslint-disable-next-line react/display-name
 const SkillsSection = memo(({ skills }: ResumeSectionProps) => {
   return <GenericSection title="Skills" data={skills} color="text-zinc-300" />;
 });
 
+// eslint-disable-next-line react/display-name
 const LanguagesSection = memo(({ languages }: ResumeSectionProps) => {
   return <GenericSection title="Languages" data={languages} color="text-zinc-300" />;
 });
 
+// eslint-disable-next-line react/display-name
 const VolunteerSection = memo(({ volunteer }: ResumeSectionProps) => {
   return <GenericSection title="Volunteer Experience" data={volunteer} color="text-zinc-600" />;
 });
 
+// eslint-disable-next-line react/display-name
 const InterestsSection = memo(({ interests }: ResumeSectionProps) => {
   return <GenericSection title="Interests" data={interests} color="text-zinc-600" />;
 });
 
+// eslint-disable-next-line react/display-name
 const AwardsSection = memo(({ awards }: ResumeSectionProps) => {
   return <GenericSection title="Awards" data={awards} color="text-zinc-600" />;
 });
 
+// eslint-disable-next-line react/display-name
 const ReferencesSection = memo(({ references }: ResumeSectionProps) => {
   return <GenericSection title="References" data={references} color="text-zinc-600" />;
 }); 
