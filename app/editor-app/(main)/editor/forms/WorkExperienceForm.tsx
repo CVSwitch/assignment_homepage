@@ -157,7 +157,7 @@ interface WorkExperienceItemProps {
 }
 
 function WorkExperienceItem({
-  id,
+  // id,
   form,
   index,
   remove,

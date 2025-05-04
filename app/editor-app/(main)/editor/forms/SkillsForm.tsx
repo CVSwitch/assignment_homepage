@@ -46,7 +46,7 @@ export default function SkillsForm() {
   useEffect(() => {
     updateSkills(watchedDescription);
     return () => updateSkills.cancel();
-  }, [watchedDescription]);
+  }, [updateSkills, watchedDescription]);
 
   return (
     <Card className="max-w-2xl mx-auto mt-10 shadow-md">

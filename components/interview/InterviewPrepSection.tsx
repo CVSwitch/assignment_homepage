@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Sidebar } from "@/components/Sidebar";
-import { ChatBubbleLeftRightIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 interface Message {

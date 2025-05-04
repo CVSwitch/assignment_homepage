@@ -46,7 +46,7 @@ export default function LanguagesForm() {
   useEffect(() => {
     updateLanguages(watchedDescription);
     return () => updateLanguages.cancel();
-  }, [watchedDescription]);
+  }, [updateLanguages, watchedDescription]);
 
   return (
     <Card className="max-w-2xl mx-auto mt-10 shadow-md">

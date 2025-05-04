@@ -46,7 +46,7 @@ export default function CoverLetterForm() {
       updateContent(watchedDescription);
     }
     return () => updateContent.cancel();
-  }, [watchedDescription]);
+  }, [updateContent, watchedDescription]);
 
   return (
     <Card className="max-w-2xl mx-auto mt-10 shadow-md">

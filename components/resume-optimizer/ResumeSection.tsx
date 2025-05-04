@@ -6,7 +6,7 @@ import {
   PencilIcon,
   ArrowDownTrayIcon,
   DocumentTextIcon,
-  TrashIcon,
+  // TrashIcon,
   InformationCircleIcon,
 } from "@heroicons/react/24/outline";
 import Link from "next/link";
@@ -26,7 +26,7 @@ import { Loader2 } from "lucide-react";
 import { resumeService } from "@/services/resumeService";
 import axios from "axios";
 import { API_CONFIG } from "@/config/api";
-import { useTheme } from "next-themes";
+// import { useTheme } from "next-themes";
 
 interface Resume {
   id: string;
@@ -45,7 +45,7 @@ interface ResumeAnalysis {
 
 export function ResumeSection() {
   const [mounted, setMounted] = useState(false);
-  const { theme } = useTheme();
+  // const { theme } = useTheme();
   const { user } = useAuth();
   const { 
     resumes, 
@@ -58,7 +58,7 @@ export function ResumeSection() {
 
   console.log(resumes, 'resumes')
   
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [setSelectedFile] = useState<File | null>(null);
   const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [showAnalysisModal, setShowAnalysisModal] = useState(false);
   const [activeTab, setActiveTab] = useState<
@@ -69,7 +69,7 @@ export function ResumeSection() {
   const [currentAnalysis, setCurrentAnalysis] = useState<ResumeAnalysis | null>(null);
   const [showDeleteModal, setShowDeleteModal] = useState(false);
   const [resumeToDelete, setResumeToDelete] = useState<string | null>(null);
-  const [currentlyParsingResumeId, setCurrentlyParsingResumeId] = useState<string | null>(null);
+  const [setCurrentlyParsingResumeId] = useState<string | null>(null);
 
   useEffect(() => {
     setMounted(true);
@@ -301,6 +301,22 @@ export function ResumeSection() {
                         </Button>
                       )}
 
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-slate-600 dark:text-gray-300 hover:bg-slate-100 dark:hover:bg-gray-600"
+                        onClick={() => handleAnalyze(resume)}
+                      >
+                        <InformationCircleIcon className="w-5 h-5" />
+                      </Button>
+                      <Button
+                        variant="ghost"
+                        size="icon"
+                        className="text-red-600 dark:text-red-400 hover:bg-red-100 dark:hover:bg-red-600"
+                        onClick={() => handleDeleteClick(resume.id)}
+                      >
+                        <InformationCircleIcon className="w-5 h-5" />
+                      </Button>
                       {resume.parsingStatus === "parsing" && (
                         <div className="flex items-center gap-2 text-slate-500 dark:text-gray-400">
                           <div className="animate-spin rounded-full h-4 w-4 border-b-2 border-indigo-600 dark:border-indigo-400"></div>

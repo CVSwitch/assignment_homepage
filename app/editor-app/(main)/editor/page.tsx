@@ -5,7 +5,7 @@ import { Button } from "@/components/ui/button";
 import { ArrowLeft, FileText, Mail } from "lucide-react";
 import ResumeEditor, { ResumeEditorRef } from "./ResumeEditor";
 import CoverLetterEditor from "./CoverLetterEditor";
-import ResumePreviewSection from "./ResumePreviewSection";
+// import ResumePreviewSection from "./ResumePreviewSection";
 import { useEffect, useRef, useState } from "react";
 import { API_CONFIG } from "@/config/api";
 import axios from "axios";
@@ -24,7 +24,8 @@ interface ApiResponse {
 
 interface ResumeDataResponse {
   data: {
-    parsed_json: any;
+    // Fixed the unexpected 'any' error
+    parsed_json: Record<string, unknown>;
     template: string;
   };
   message: string;
@@ -43,7 +44,8 @@ export default function EditorPage() {
   const [validationMessage, setValidationMessage] = useState<string | null>(null);
   const resumePreviewRef = useRef<HTMLDivElement>(null);
   const [userResumeId, setUserResumeId] = useState<string | null>(resumeId);
-  const [initialResumeData, setInitialResumeData] = useState<any>(null);
+  // fixed 'any' error
+  const [initialResumeData, setInitialResumeData] = useState<Record<string, unknown> | null>(null);
   const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
@@ -131,8 +133,22 @@ export default function EditorPage() {
 
 
 
+// Fixed 'any' unexpected error
+  interface ResumeData {
+    personalInfo: {
+      firstname: string;
+      lastname: string;
+    };
+    workExperiences: Array<{
+      company: string;
+      position: string;
+      startDate: string;
+      endDate?: string;
+    }>;
+    [key: string]: unknown; // Allow additional properties
+  }
 
-  const handleSave = async (resumeData: any, template: string) => {
+  const handleSave = async (resumeData: ResumeData, template: string) => {
     // Validation logic
     if (!resumeData) {
       setValidationMessage("Resume data is required.");

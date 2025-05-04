@@ -18,7 +18,7 @@ interface Props {
   resumeFile?: File | null;
 }
 
-export function InterviewChat({ interviewType, isPracticeMode, onComplete, resumeFile }: Props) {
+export function InterviewChat({ interviewType, isPracticeMode, resumeFile }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
