@@ -84,6 +84,7 @@ export default function ResumePreview({ className, contentRef }: ResumePreviewPr
   );
 }
 
+// eslint-disable-next-line react/display-name
 const PersonalInfoHeader = memo(({ personalInfo }: ResumeSectionProps) => {
   const { firstname, lastname, email, phone, socials, city, country, summary } =
     personalInfo || {};
@@ -159,6 +160,7 @@ const PersonalInfoHeader = memo(({ personalInfo }: ResumeSectionProps) => {
   );
 });
 
+// eslint-disable-next-line react/display-name
 const WorkExperienceSection = memo(
   ({ workExperiences }: ResumeSectionProps) => {
     if (!workExperiences?.length) return null;
@@ -209,6 +211,7 @@ const WorkExperienceSection = memo(
   }
 );
 
+// eslint-disable-next-line react/display-name
 const EducationSection = memo(({ education }: ResumeSectionProps) => {
   if (!education?.length) return null;
 
@@ -254,6 +257,7 @@ const EducationSection = memo(({ education }: ResumeSectionProps) => {
   );
 });
 
+// eslint-disable-next-line react/display-name
 const ProjectsSection = memo(({ projects }: ResumeSectionProps) => {
   if (!projects?.length) return null;
 
@@ -306,30 +310,37 @@ const ProjectsSection = memo(({ projects }: ResumeSectionProps) => {
   );
 });
 
+// eslint-disable-next-line react/display-name
 const SkillsSection = memo(({ skills }: ResumeSectionProps) => {
   return <GenericSection title="Skills" data={skills} />;
 });
 
+// eslint-disable-next-line react/display-name
 const LanguagesSection = memo(({ languages }: ResumeSectionProps) => {
   return <GenericSection title="Languages" data={languages} />;
 });
 
+// eslint-disable-next-line react/display-name
 const VolunteerSection = memo(({ volunteer }: ResumeSectionProps) => {
   return <GenericSection title="Volunteer Experience" data={volunteer} />;
 });
 
+// eslint-disable-next-line react/display-name
 const InterestsSection = memo(({ interests }: ResumeSectionProps) => {
   return <GenericSection title="Interests" data={interests} />;
 });
 
+// eslint-disable-next-line react/display-name
 const AwardsSection = memo(({ awards }: ResumeSectionProps) => {
   return <GenericSection title="Awards" data={awards} />;
 });
 
+// eslint-disable-next-line react/display-name
 const ReferencesSection = memo(({ references }: ResumeSectionProps) => {
   return <GenericSection title="References" data={references} />;
 });
 
+// eslint-disable-next-line react/display-name
 const GenericSection = memo(({ title, data }: GenericSectionProps) => {
   if (!data || !data.description || data.description === "<p></p>") return null;
   const sanitizedHTML = DOMPurify.sanitize(data.description);

@@ -18,7 +18,7 @@ interface Props {
   resumeFile?: File | null;
 }
 
-export function InterviewChat({ interviewType, isPracticeMode, onComplete, resumeFile }: Props) {
+export function InterviewChat({ interviewType, isPracticeMode, resumeFile }: Props) {
   const [messages, setMessages] = useState<Message[]>([]);
   const [input, setInput] = useState("");
 
@@ -76,11 +76,11 @@ export function InterviewChat({ interviewType, isPracticeMode, onComplete, resum
               className={`max-w-[80%] rounded-xl p-4 ${
                 message.type === "user"
                   ? "bg-blue-600 text-white"
-                  : "bg-white border border-gray-200"
+                  : "bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700"
               }`}
             >
               {message.type === "assistant" ? (
-                <div className="prose prose-sm dark:prose-invert">
+                <div className="prose prose-sm dark:prose-invert max-w-none">
                   <ReactMarkdown>{message.content}</ReactMarkdown>
                 </div>
               ) : (
@@ -92,14 +92,14 @@ export function InterviewChat({ interviewType, isPracticeMode, onComplete, resum
       </div>
 
       {/* Input Area */}
-      <div className="p-4 bg-white border-t border-gray-200">
+      <div className="p-4 bg-white dark:bg-gray-800 border-t border-gray-200 dark:border-gray-700">
         <div className="flex gap-2">
           <input
             type="text"
             value={input}
             onChange={(e) => setInput(e.target.value)}
             placeholder={isPracticeMode ? "Record your answer..." : "Ask a question..."}
-            className="flex-1 rounded-xl border border-gray-200 px-4 py-2 focus:outline-none focus:border-blue-500"
+            className="flex-1 rounded-xl border border-gray-200 dark:border-gray-600 px-4 py-2 focus:outline-none focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400"
             onKeyPress={(e) => e.key === "Enter" && handleSend()}
           />
           <button

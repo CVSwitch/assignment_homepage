@@ -148,7 +148,7 @@ interface ProjectItemProps {
 }
 
 function ProjectItem({
-  id,
+  // id,
   form,
   index,
   remove,

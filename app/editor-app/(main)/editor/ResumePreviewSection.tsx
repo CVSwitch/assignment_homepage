@@ -1,9 +1,11 @@
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { useRef, useState } from "react";
 import ResumePreview from "./ResumePreview";
 import TwoColumnResumePreview from "./TwoColumnResumePreview";
 import TwoColumnColoredResumePreview from "./TwoColumnColoredResumePreview";
 import TemplateDrawer from "./TemplateDrawer";
 import SingleColumnColored from "./SingleColumnColored";
+// eslint-disable-next-line @typescript-eslint/no-unused-vars
 import { Button } from "react-day-picker";
 
 type TemplateType = "single" | "double" | "colored" | "singleColored";

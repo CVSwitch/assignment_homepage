@@ -40,7 +40,7 @@ export default function InterestForm() {
   useEffect(() => {
     updateInterests(watchedDescription);
     return () => updateInterests.cancel();
-  }, [watchedDescription]);
+  }, [updateInterests, watchedDescription]);
 
   return (
     <Card className="max-w-2xl mx-auto mt-10 shadow-md">

@@ -16,9 +16,10 @@ import { ResumeValues } from "@/lib/validation";
 import React, { useEffect, useState, useRef, forwardRef, useImperativeHandle } from "react";
 import html2pdf from "html2pdf.js";
 
+// changed the resumeData value to ResumeValues
 interface ResumeEditorProps {
   initialData?: ResumeValues;
-  onSave: (resumeData: any, template: string, pdfFile: File) => void;
+  onSave: (resumeData: ResumeValues, template: string, pdfFile: File) => void;
   contentRef: React.RefObject<HTMLDivElement>;
 }
 
@@ -29,6 +30,25 @@ export interface ResumeEditorRef {
 type TemplateType = "single" | "double" | "colored" | "singleColored";
 
 // Internal component that has access to ResumeProvider context
+/**
+ * The `ResumeEditorInternal` component provides a user interface for editing and previewing a resume.
+ * It includes forms for various sections of the resume, such as personal information, work experience,
+ * education, projects, skills, and more. The component also allows users to preview the resume and save it as a PDF.
+ *
+ * @param {Object} props - The props for the component.
+ * @param {(resumeData: ResumeValues, template: string, pdfFile: File) => void} props.onSave - Callback function triggered when the resume is saved. It receives the resume data, selected template, and generated PDF file as arguments.
+ * @param {React.RefObject<HTMLDivElement>} props.contentRef - A reference to the HTML element containing the resume content for PDF generation.
+ * @param {TemplateType} props.template - The currently selected resume template.
+ * @param {(template: TemplateType) => void} props.setTemplate - Function to update the selected resume template.
+ * @param {React.RefObject<{ save: () => Promise<void> }>} props.saveRef - A reference object exposing a `save` method to trigger the save functionality externally.
+ *
+ * @returns {JSX.Element} The rendered `ResumeEditorInternal` component.
+ *
+ * @remarks
+ * - The `handleSave` function generates a PDF of the resume using the `html2pdf` library and invokes the `onSave` callback.
+ * - The `save` method is exposed via the `saveRef` prop, allowing external components to trigger the save functionality.
+ * - The component is structured with a two-column layout: one for forms and the other for the resume preview.
+ */
 function ResumeEditorInternal({
   onSave,
   contentRef,
@@ -36,7 +56,7 @@ function ResumeEditorInternal({
   setTemplate,
   saveRef
 }: {
-  onSave: (resumeData: any, template: string, pdfFile: File) => void;
+  onSave: (resumeData: ResumeValues, template: string, pdfFile: File) => void;
   contentRef: React.RefObject<HTMLDivElement>;
   template: TemplateType;
   setTemplate: (template: TemplateType) => void;
@@ -44,7 +64,7 @@ function ResumeEditorInternal({
 }) {
   const { resumeData } = useResume();
 
-  const handleSave = async () => {
+  const handleSave = React.useCallback(async () => {
     if (contentRef.current) {
       const options = {
         margin: 1,
@@ -61,14 +81,14 @@ function ResumeEditorInternal({
         console.error("Error generating PDF:", error);
       }
     }
-  };
+  }, [contentRef, onSave, resumeData, template]);
 
   // Expose save method through ref
   useEffect(() => {
     if (saveRef.current) {
       saveRef.current.save = handleSave;
     }
-  }, [resumeData, template]);
+  }, [resumeData, template, handleSave, saveRef]);
 
   return (
     <div className="flex h-screen">

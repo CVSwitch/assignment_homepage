@@ -37,6 +37,7 @@ export default function CoverLetterPreview({ className, contentRef }: CoverLette
   );
 }
 
+// fixed the display name to resolve the error
 const CoverLetterSection = memo(({ data }: { data: string }) => {
   if (!data || data === "<p></p>") return null;
   const sanitizedHTML = DOMPurify.sanitize(data);
@@ -55,3 +56,5 @@ const CoverLetterSection = memo(({ data }: { data: string }) => {
     </div>
   );
 });
+
+CoverLetterSection.displayName = "CoverLetterSection";

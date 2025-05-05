@@ -2,7 +2,7 @@
 
 import { useState, useRef, useEffect } from 'react';
 import { Sidebar } from "@/components/Sidebar";
-import { ChatBubbleLeftRightIcon, PaperAirplaneIcon } from "@heroicons/react/24/outline";
+import { PaperAirplaneIcon } from "@heroicons/react/24/outline";
 import { InformationCircleIcon } from "@heroicons/react/24/solid";
 
 interface Message {
@@ -12,7 +12,12 @@ interface Message {
   timestamp: Date;
 }
 
-export function InterviewPrepSection() {
+interface InterviewPrepSectionProps {
+  isCollapsed: boolean;
+  setIsCollapsed: (value: boolean) => void;
+}
+
+export function InterviewPrepSection({ isCollapsed, setIsCollapsed }: InterviewPrepSectionProps) {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: '1',
@@ -121,102 +126,106 @@ export function InterviewPrepSection() {
       handleSendMessage();
     }
   };
+  
 
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Sidebar />
-      
-      <div className="ml-64 flex flex-col h-screen">
-        <div className="p-6 bg-white border-b border-gray-200">
-          <h1 className="text-2xl font-bold">Interview Preparation</h1>
-          
-          {/* User Guide */}
-          <div className="mt-4 bg-blue-50 border border-blue-200 rounded-lg p-4">
-            <div className="flex items-start">
-              <InformationCircleIcon className="w-6 h-6 text-blue-500 mr-3 flex-shrink-0 mt-0.5" />
-              <div>
-                <h3 className="font-semibold text-blue-800 mb-1">How to Use This Chat</h3>
-                <p className="text-blue-700">
-                  Practice answering common interview questions or ask for advice on specific interview scenarios. 
-                  You can try questions like:
-                </p>
-                <ul className="list-disc list-inside text-blue-700 mt-2 space-y-1">
-                  <li>How should I answer "Tell me about yourself"?</li>
-                  <li>What are good questions to ask the interviewer?</li>
-                  <li>How do I explain employment gaps?</li>
-                  <li>Can you give me feedback on my answer to...</li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        
-        {/* Chat Area */}
-        <div className="flex-1 overflow-y-auto p-6 space-y-4">
-          {messages.map((message) => (
-            <div 
-              key={message.id} 
-              className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
-            >
-              <div 
-                className={`max-w-3xl rounded-lg p-4 ${
-                  message.sender === 'user' 
-                    ? 'bg-blue-600 text-white' 
-                    : 'bg-gray-100 text-gray-800'
-                }`}
-              >
-                <p className="whitespace-pre-line">{message.content}</p>
-                <p 
-                  className={`text-xs mt-1 ${
-                    message.sender === 'user' ? 'text-blue-200' : 'text-gray-500'
-                  }`}
-                >
-                  {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
-                </p>
-              </div>
-            </div>
-          ))}
-          
-          {isLoading && (
-            <div className="flex justify-start">
-              <div className="bg-gray-100 rounded-lg p-4">
-                <div className="flex space-x-2">
-                  <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '0ms' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '150ms' }}></div>
-                  <div className="w-2 h-2 rounded-full bg-gray-400 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+    <div className="min-h-screen h-full w-full bg-white dark:bg-gray-900 bg-[radial-gradient(125%_125%_at_50%_10%,#fff_40%,#63e_100%)] dark:bg-[radial-gradient(125%_125%_at_50%_10%,#1f2937_40%,#1e40af_100%)] flex flex-col md:flex-row">
+      {/* Added dark mode and responsiveness */}
+      <Sidebar onCollapseChange={setIsCollapsed} />
+      <main className={`flex-1 transition-all duration-300 ${isCollapsed ? 'md:ml-16' : 'md:ml-64'} p-4 lg:p-6 max-w-4xl mx-auto w-full`}>
+        <div className="flex flex-col h-full">
+          {/* Header Section */}
+          <div className="p-4 md:p-6 bg-white dark:bg-gray-800 border-b border-gray-200 dark:border-gray-700">
+            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">Interview Preparation</h1>
+            
+            {/* User Guide */}
+            <div className="mt-4 bg-blue-50 dark:bg-blue-900/30 border border-blue-200 dark:border-blue-800 rounded-lg p-4">
+              <div className="flex items-start">
+                <InformationCircleIcon className="w-6 h-6 text-blue-500 dark:text-blue-400 mr-3 flex-shrink-0 mt-0.5" />
+                <div>
+                  <h3 className="font-semibold text-blue-800 dark:text-blue-300 mb-1">How to Use This Chat</h3>
+                  <p className="text-blue-700 dark:text-blue-200">
+                    Practice answering common interview questions or ask for advice on specific interview scenarios. 
+                    You can try questions like:
+                  </p>
+                  <ul className="list-disc list-inside text-blue-700 dark:text-blue-200 mt-2 space-y-1">
+                    <li>How should I answer &quot;Tell me about yourself&quot;?</li>
+                    <li>What are good questions to ask the interviewer?</li>
+                    <li>How do I explain employment gaps?</li>
+                    <li>Can you give me feedback on my answer to...</li>
+                  </ul>
                 </div>
               </div>
             </div>
-          )}
+          </div>
           
-          <div ref={messagesEndRef} />
-        </div>
-        
-        {/* Input Area */}
-        <div className="p-4 border-t border-gray-200 bg-white">
-          <div className="flex items-center">
-            <textarea
-              value={inputMessage}
-              onChange={(e) => setInputMessage(e.target.value)}
-              onKeyDown={handleKeyDown}
-              placeholder="Type your message here..."
-              className="flex-1 border border-gray-300 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none"
-              rows={1}
-            />
-            <button
-              onClick={handleSendMessage}
-              disabled={!inputMessage.trim() || isLoading}
-              className={`ml-2 p-2 rounded-full ${
-                !inputMessage.trim() || isLoading
-                  ? 'bg-gray-200 text-gray-400 cursor-not-allowed'
-                  : 'bg-blue-600 text-white hover:bg-blue-700'
-              }`}
-            >
-              <PaperAirplaneIcon className="w-5 h-5" />
-            </button>
+          {/* Chat Area */}
+          <div className="flex-1 overflow-y-auto p-4 md:p-6 space-y-4">
+            {messages.map((message) => (
+              <div 
+                key={message.id} 
+                className={`flex ${message.sender === 'user' ? 'justify-end' : 'justify-start'}`}
+              >
+                <div 
+                  className={`max-w-[85%] md:max-w-3xl rounded-lg p-3 md:p-4 ${
+                    message.sender === 'user' 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-gray-100 dark:bg-gray-800 text-gray-800 dark:text-gray-200'
+                  }`}
+                >
+                  <p className="whitespace-pre-line text-sm md:text-base">{message.content}</p>
+                  <p 
+                    className={`text-xs mt-1 ${
+                      message.sender === 'user' ? 'text-blue-200' : 'text-gray-500 dark:text-gray-400'
+                    }`}
+                  >
+                    {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
+                  </p>
+                </div>
+              </div>
+            ))}
+            
+            {isLoading && (
+              <div className="flex justify-start">
+                <div className="bg-gray-100 dark:bg-gray-800 rounded-lg p-3 md:p-4">
+                  <div className="flex space-x-2">
+                    <div className="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-500 animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-500 animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                    <div className="w-2 h-2 rounded-full bg-gray-400 dark:bg-gray-500 animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                  </div>
+                </div>
+              </div>
+            )}
+            
+            <div ref={messagesEndRef} />
+          </div>
+          
+          {/* Input Area */}
+          <div className="p-4 border-t border-gray-200 dark:border-gray-700 bg-white dark:bg-gray-800">
+            <div className="flex items-center gap-2">
+              <textarea
+                value={inputMessage}
+                onChange={(e) => setInputMessage(e.target.value)}
+                onKeyDown={handleKeyDown}
+                placeholder="Type your message here..."
+                className="flex-1 border border-gray-300 dark:border-gray-600 rounded-lg py-2 px-4 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent resize-none bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 min-h-[40px] max-h-[120px]"
+                rows={1}
+              />
+              <button
+                onClick={handleSendMessage}
+                disabled={!inputMessage.trim() || isLoading}
+                className={`p-2 rounded-full ${
+                  !inputMessage.trim() || isLoading
+                    ? 'bg-gray-200 dark:bg-gray-600 text-gray-400 dark:text-gray-500 cursor-not-allowed'
+                    : 'bg-blue-600 text-white hover:bg-blue-700'
+                }`}
+              >
+                <PaperAirplaneIcon className="w-5 h-5" />
+              </button>
+            </div>
           </div>
         </div>
-      </div>
+      </main>
     </div>
   );
 } 

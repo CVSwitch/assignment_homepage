@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { User } from '@/lib/auth';
 
@@ -18,17 +18,14 @@ interface HeroSectionProps {
 }
 
 export function HeroSection({ 
-  user, 
   hasUploadedResume, 
   onUploadResume, 
   pastResumes,
   onOfferingSelect 
 }: HeroSectionProps) {
   const router = useRouter();
-  const [selectedFile, setSelectedFile] = useState<File | null>(null);
-  const fileInputRef = useRef<HTMLInputElement | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [showOfferings, setShowOfferings] = useState(!hasUploadedResume);
+  const [showOfferings] = useState(!hasUploadedResume);
   const [hoveredCard, setHoveredCard] = useState<string | null>(null);
 
   const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
@@ -58,52 +55,48 @@ export function HeroSection({
     }
   };
 
-  const toggleOfferings = () => {
-    setShowOfferings(!showOfferings);
-  };
-
   if (showOfferings) {
     return (
-      <div className="bg-white rounded-xl p-8 mb-6 max-w-4xl mx-auto">
-        <h2 className="text-2xl font-bold text-gray-800 mb-2">What would you start with?</h2>
-        <p className="text-gray-500 mb-8">Select an option to begin optimizing your career assets</p>
+      <div className="bg-opacity-0 rounded-xl p-8 mb-6 max-w-4xl mx-auto">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">What would you start with?</h2>
+        <p className="text-gray-500 dark:text-gray-400 mb-8">Select an option to begin optimizing your career assets</p>
         
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <div className=" bg-opacity-0 grid grid-cols-1 md:grid-cols-2 gap-6">
           {offerings.map((option) => (
             <div
               key={option.id}
               onClick={() => handleCardClick(option.id)}
               onMouseEnter={() => setHoveredCard(option.id)}
               onMouseLeave={() => setHoveredCard(null)}
-              className={`relative p-6 rounded-xl border border-gray-200 transition-all cursor-pointer overflow-hidden
+              className={`relative p-6 rounded-xl border border-gray-200 dark:border-gray-700 transition-all cursor-pointer overflow-hidden
                 ${isSubmitting ? 'opacity-70 pointer-events-none' : ''}
                 ${hoveredCard === option.id ? 'shadow-lg border-transparent' : 'hover:shadow-md'}
               `}
             >
               {/* Gradient overlay */}
               <div className={`absolute inset-0 bg-gradient-to-br transition-opacity duration-300
-                ${option.id === 'resume' ? 'from-blue-50 to-purple-50' : ''}
-                ${option.id === 'linkedin' ? 'from-sky-50 to-blue-50' : ''}
-                ${option.id === 'cover-letter' ? 'from-emerald-50 to-teal-50' : ''}
-                ${option.id === 'interview' ? 'from-amber-50 to-orange-50' : ''}
+                ${option.id === 'resume' ? 'from-blue-50 to-purple-50 dark:from-blue-900 dark:to-purple-900' : ''}
+                ${option.id === 'linkedin' ? 'from-sky-50 to-blue-50 dark:from-sky-900 dark:to-blue-900' : ''}
+                ${option.id === 'cover-letter' ? 'from-emerald-50 to-teal-50 dark:from-emerald-900 dark:to-teal-900' : ''}
+                ${option.id === 'interview' ? 'from-amber-50 to-orange-50 dark:from-amber-900 dark:to-orange-900' : ''}
                 ${hoveredCard === option.id ? 'opacity-100' : 'opacity-0'}
               `}></div>
               
               {/* Animated border effect */}
               <div className={`absolute inset-0 rounded-xl border-2 pointer-events-none transition-all duration-300
-                ${option.id === 'resume' ? 'border-blue-200' : ''}
-                ${option.id === 'linkedin' ? 'border-sky-200' : ''}
-                ${option.id === 'cover-letter' ? 'border-emerald-200' : ''}
-                ${option.id === 'interview' ? 'border-amber-200' : ''}
+                ${option.id === 'resume' ? 'border-blue-200 dark:border-blue-700' : ''}
+                ${option.id === 'linkedin' ? 'border-sky-200 dark:border-sky-700' : ''}
+                ${option.id === 'cover-letter' ? 'border-emerald-200 dark:border-emerald-700' : ''}
+                ${option.id === 'interview' ? 'border-amber-200 dark:border-amber-700' : ''}
                 ${hoveredCard === option.id ? 'opacity-100' : 'opacity-0'}
               `}></div>
               
               <div className="relative flex items-center z-10">
                 <div className={`w-10 h-10 rounded-lg flex items-center justify-center mr-4 transition-colors
-                  ${option.id === 'resume' ? 'bg-blue-100 text-blue-600' : ''}
-                  ${option.id === 'linkedin' ? 'bg-sky-100 text-sky-600' : ''}
-                  ${option.id === 'cover-letter' ? 'bg-emerald-100 text-emerald-600' : ''}
-                  ${option.id === 'interview' ? 'bg-amber-100 text-amber-600' : ''}
+                  ${option.id === 'resume' ? 'bg-blue-100 text-blue-600 dark:bg-blue-900 dark:text-blue-300' : ''}
+                  ${option.id === 'linkedin' ? 'bg-sky-100 text-sky-600 dark:bg-sky-900 dark:text-sky-300' : ''}
+                  ${option.id === 'cover-letter' ? 'bg-emerald-100 text-emerald-600 dark:bg-emerald-900 dark:text-emerald-300' : ''}
+                  ${option.id === 'interview' ? 'bg-amber-100 text-amber-600 dark:bg-amber-900 dark:text-amber-300' : ''}
                 `}>
                   <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" strokeWidth="1.5">
                     {option.id === 'resume' && (
@@ -122,14 +115,14 @@ export function HeroSection({
                 </div>
                 <div>
                   <h3 className={`font-semibold text-lg transition-colors 
-                    ${option.id === 'resume' ? 'text-blue-800' : ''}
-                    ${option.id === 'linkedin' ? 'text-sky-800' : ''}
-                    ${option.id === 'cover-letter' ? 'text-emerald-800' : ''}
-                    ${option.id === 'interview' ? 'text-amber-800' : ''}
+                    ${option.id === 'resume' ? 'text-blue-800 dark:text-blue-300' : ''}
+                    ${option.id === 'linkedin' ? 'text-sky-800 dark:text-sky-300' : ''}
+                    ${option.id === 'cover-letter' ? 'text-emerald-800 dark:text-emerald-300' : ''}
+                    ${option.id === 'interview' ? 'text-amber-800 dark:text-amber-300' : ''}
                   `}>
                     {option.label}
                   </h3>
-                  <p className="text-sm text-gray-500 mt-1">
+                  <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">
                     {option.id === 'resume' && 'Optimize your resume with AI'}
                     {option.id === 'linkedin' && 'Enhance your LinkedIn profile'}
                     {option.id === 'cover-letter' && 'Create a tailored cover letter'}
@@ -146,16 +139,16 @@ export function HeroSection({
 
   return (
     <div className="space-y-6">
-      <div className="bg-white rounded-lg shadow-sm p-6">
-        <h2 className="text-xl font-semibold mb-4">Upload Your Resume</h2>
+      <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+        <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Upload Your Resume</h2>
         <div className="flex items-center justify-center w-full">
-          <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 border-dashed rounded-lg cursor-pointer bg-gray-50 hover:bg-gray-100">
+          <label className="flex flex-col items-center justify-center w-full h-64 border-2 border-gray-300 dark:border-gray-600 border-dashed rounded-lg cursor-pointer bg-gray-50 dark:bg-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600">
             <div className="flex flex-col items-center justify-center pt-5 pb-6">
-              <svg className="w-8 h-8 mb-4 text-gray-500" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
+              <svg className="w-8 h-8 mb-4 text-gray-500 dark:text-gray-400" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 16">
                 <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 13h3a3 3 0 0 0 0-6h-.025A5.56 5.56 0 0 0 16 6.5 5.5 5.5 0 0 0 5.207 5.021C5.137 5.017 5.071 5 5 5a4 4 0 0 0 0 8h2.167M10 15V6m0 0L8 8m2-2 2 2"/>
               </svg>
-              <p className="mb-2 text-sm text-gray-500"><span className="font-semibold">Click to upload</span> or drag and drop</p>
-              <p className="text-xs text-gray-500">PDF, DOC, or DOCX (MAX. 10MB)</p>
+              <p className="mb-2 text-sm text-gray-500 dark:text-gray-400"><span className="font-semibold">Click to upload</span> or drag and drop</p>
+              <p className="text-xs text-gray-500 dark:text-gray-400">PDF, DOC, or DOCX (MAX. 10MB)</p>
             </div>
             <input type="file" className="hidden" onChange={handleFileChange} accept=".pdf,.doc,.docx" />
           </label>
@@ -163,21 +156,21 @@ export function HeroSection({
       </div>
 
       {hasUploadedResume && (
-        <div className="bg-white rounded-lg shadow-sm p-6">
-          <h2 className="text-xl font-semibold mb-4">Your Resumes</h2>
+        <div className="bg-white dark:bg-gray-800 rounded-lg shadow-sm p-6">
+          <h2 className="text-xl font-semibold mb-4 text-gray-800 dark:text-white">Your Resumes</h2>
           <div className="space-y-4">
             {pastResumes.map((resume, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div key={index} className="flex items-center justify-between p-4 bg-gray-50 dark:bg-gray-700 rounded-lg">
                 <div className="flex items-center space-x-4">
-                  <svg className="w-8 h-8 text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <svg className="w-8 h-8 text-gray-500 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z" />
                   </svg>
                   <div>
-                    <p className="font-medium">{resume}</p>
-                    <p className="text-sm text-gray-500">Uploaded {new Date().toLocaleDateString()}</p>
+                    <p className="font-medium text-gray-800 dark:text-white">{resume}</p>
+                    <p className="text-sm text-gray-500 dark:text-gray-400">Uploaded {new Date().toLocaleDateString()}</p>
                   </div>
                 </div>
-                <button className="text-blue-600 hover:text-blue-800">Edit</button>
+                <button className="text-blue-600 dark:text-blue-400 hover:text-blue-800 dark:hover:text-blue-300">Edit</button>
               </div>
             ))}
           </div>

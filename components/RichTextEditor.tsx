@@ -39,12 +39,14 @@ export default function RichTextEditor({ value, onChange, height="156px" }: Text
     immediatelyRender: false,
   });
 
-  const debouncedOnChange = useCallback(
-    debounce((html: string) => {
+  // This function is used to debounce the onChange event to avoid too many updates
+  // when the user is typing. It will only call onChange after 300ms of inactivity.
+  // Fixed "React Hook useCallback received a function whose dependencies are unknown"
+  const debouncedOnChange = useCallback((html: string) => {
+    debounce(() => {
       onChange(html);
-    }, 300), 
-    [onChange]
-  );
+    }, 300)();
+  }, [onChange]);
 
   useEffect(() => {
     if (!editor) return;

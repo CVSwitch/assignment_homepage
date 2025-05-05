@@ -55,7 +55,7 @@ export function InterviewTypeSelector({ selected, onSelect, onResumeUpload }: Pr
         leaveTo="transform opacity-0 scale-95"
       >
         <Menu.Items className="absolute left-0 mt-2 w-72 rounded-xl bg-white shadow-lg border border-gray-200 overflow-hidden">
-          {Object.entries(interviewTypes).map(([key, { name, description, icon: Icon }]) => (
+          {Object.entries(interviewTypes).map(([key, { name, description }]) => (
             <Menu.Item key={key}>
               {({ active }) => (
                 key === 'resume-based' ? (
